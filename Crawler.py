@@ -135,7 +135,7 @@ def parse_post(address):
     # 获取文本
     add_c = additional_content[0].text
     # 判断内容
-    key_word = ["计算机", "软件", "网络", "0812"]
+    key_word = ["计算机", "计科", "计算机技术", "计算机科学与技术", "软件工程", "软工", "网络安全", "网安", "0812", "0854", "机器学习", "大数据"]
     for word in key_word:
         if add_c.find(word)>=0:
             return True
@@ -164,9 +164,9 @@ def run():
     print("work finished!")
     # 记录之前遇到的所有错误
     print("current error items:")
-    for eadd,econt in error_address,error_content:
-        print(eadd)
-        print(econt)
+    for i in range(len(error_address)):
+        print("出错网址: ", error_address[i])
+        print("出错内容: ", error_content[i])
 
 
 def test():
