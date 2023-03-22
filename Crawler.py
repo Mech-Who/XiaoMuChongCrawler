@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 error_address = []
 error_content = []
+title_list = []
 
 
 def download_content(url):
@@ -74,6 +75,12 @@ def parse(soup, filename):
                 if len(child.attrs)>0:
                     address = child.contents[0].attrs['href']
                     title = child.contents[0].string
+                    # 如果标题已经存在,则跳过这个帖子
+                    if title in title_list:
+                        flag = False
+                        break
+                    else:
+                        title_list.append(title)
                     # 记录帖子的 网址 和 标题
                     a_post = address + '\n' + title + '\n'
                     # 根据网址爬取具体内容, 返回值flag 为 True 则需要收集
