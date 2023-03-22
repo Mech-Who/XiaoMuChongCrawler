@@ -75,7 +75,7 @@ def parse(soup, filename):
                 if len(child.attrs)>0:
                     address = child.contents[0].attrs['href']
                     title = child.contents[0].string
-                    # 如果标题已经存在,则跳过这个帖子
+                    # 如果标题已经存在,则跳过这个帖子,否则将标题加入列表
                     if title in title_list:
                         flag = False
                         break
