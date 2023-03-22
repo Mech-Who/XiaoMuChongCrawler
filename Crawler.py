@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 error_address = []
 error_content = []
 title_list = []
+address_list = []
 
 
 def download_content(url):
@@ -39,7 +40,7 @@ def append_to_file(filename, content):
         第二个函数，将字符串内容保存到文件中
         第一个参数为所要保存的文件名，第二个参数为要保存的字符串内容的变量
     """
-    with open(filename, mode="a", encoding="gbk") as f:
+    with open(filename, mode="a", encoding="utf-8") as f:
         f.write(content)
 
 
@@ -78,11 +79,12 @@ def parse(soup, filename):
                     address = child.contents[0].attrs['href']
                     title = child.contents[0].string
                     # 如果标题已经存在,则跳过这个帖子,否则将标题加入列表
-                    if title in title_list:
+                    if (title in title_list) or (address in address_list):
                         flag = False
                         break
                     else:
                         title_list.append(title)
+                        address_list.append(address)
                     # 记录帖子的 网址 和 标题
                     a_post = address + '\n' + title + '\n'
                     # 根据网址爬取具体内容, 返回值flag 为 True 则需要收集
@@ -110,7 +112,7 @@ def parse(soup, filename):
             break
         if flag:
             whole_post = whole_post + a_post + '\n'
-            print(whole_post)
+            print(a_post)
     append_to_file(filename, whole_post)
     return is_end
     # print(whole_post)
