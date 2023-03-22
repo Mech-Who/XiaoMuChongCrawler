@@ -44,7 +44,9 @@ def append_to_file(filename, content):
 
 
 def create_doc_from_filename(filename):
-    # 输入参数为要分析的 html 文件名，返回值为对应的 BeautifulSoup 对象
+    """
+    输入参数为要分析的 html 文件名，返回值为对应的 BeautifulSoup 对象
+    """
     with open(filename, "r", encoding='gbk') as f:
         html_content = f.read()
         soup = BeautifulSoup(html_content, "lxml")
@@ -71,7 +73,7 @@ def parse(soup, filename):
     for post in post_list:
         for child in post.children:
             if type(child) != bs4.element.NavigableString:
-                # 内容非空
+                # 内容非空,且有链接,则是标题
                 if len(child.attrs)>0:
                     address = child.contents[0].attrs['href']
                     title = child.contents[0].string
@@ -142,7 +144,7 @@ def parse_post(address):
     # 获取文本
     add_c = additional_content[0].text
     # 判断内容
-    key_word = ["计算机", "计科", "计算机技术", "计算机科学与技术", "软件工程", "软工", "网络安全", "网安", "0812", "0854", "机器学习", "大数据"]
+    key_word = ["计算机", "计算机技术", "计算机科学与技术", "软件工程", "网络安全", "0812", "0854", "机器学习", "大数据"]
     for word in key_word:
         if add_c.find(word)>=0:
             return True
